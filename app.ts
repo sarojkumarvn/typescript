@@ -141,38 +141,38 @@ type ID = number | string;
 // Narrowing
 function PrintId(id: ID) {
   // we declared the type of id which is either number or string
-  if (typeof id === "string") console.log(id.toUpperCase());
-  else console.log(id);
+  // if (typeof id === "string") console.log(id.toUpperCase());
+  // else console.log(id);
 }
 
-console.log(PrintId(123)); // number
-console.log(PrintId("saroj")); // string
+// console.log(PrintId(123)); // number
+// console.log(PrintId("saroj")); // string
 
 function getFirstThree(x: string | number[]) {
   return x.slice(0, 3);
 }
 
-console.log(getFirstThree([1, 2, 3, 4, 5]));
+// console.log(getFirstThree([1, 2, 3, 4, 5]));
 
 //GENERICS - it is generalized code , used for making reusable codeeven after we change the type
 
 function LogString(args: string) {
-  console.log(args.toUpperCase());
+  // console.log(args.toUpperCase());
   return args;
 }
 function LogNumber(args: number) {
-  console.log(args);
+  // console.log(args);
   return args;
 }
 
 function LogArray(args: any) {
   // we are ignoring type
-  console.log(args);
+  // console.log(args);
   return args;
 }
 
 function LogAnything<T>(args: T): T {
-  console.log(args);
+  // console.log(args);
   return args;
 }
 // in this any case we will use generics , that is like you can give any type of data in
@@ -185,9 +185,77 @@ function LogAnything<T>(args: T): T {
 
 // ANOTHER EXAMPLE FOR GENERIC
 interface HasAge {
+  // name: string;
   age: number;
 }
 
-function getOldest(people: HasAge[]): HasAge {
+function getOldest<T extends HasAge>(people: T[]):T  {   /// this says that whenever you add T then this extends will force the T to add age which is from the HasAge 
+
   return people.sort((a, b) => a.age - b.age)[people.length - 1];
+} 
+
+
+const people = [
+  { name: "Saroj1", age: 74 },
+  { name: "Saroj2", age: 86 },
+  { name: "Saroj3", age: 12 },
+];
+
+interface player {
+  name: string;
+  age: number;
 }
+
+const players: player[] = [
+  { name: "bumrah1", age: 745 },
+  { name: "Saddddoj2", age: 867 },
+  { name: "Sarssssoj3", age: 112 },
+];
+
+// console.log(getOldest(players).name);
+
+const person = getOldest(players);
+person.age ;
+
+
+
+// FETCHING DATA THROUGH TS 
+
+interface IPost {
+  id : number ;
+  title : string ;
+  description : string ;
+}
+
+interface IUser {
+  id : number ;
+  name : string ;
+  age : number ;
+  
+}
+const fetchPostData = async (path : string) : Promise<IUser[]> => {
+  const response = await fetch(`http://example.com${path}`);
+  return response.json();
+}
+
+const fetchData = async <ResultType> (path : string):Promise<ResultType>  =>{
+  const response = await fetch(`http://example.com${path}`);
+  return response.json();
+}
+
+(async ()=>{
+  // const posts = await fetchPostData("/posts");
+  // const users = await fetchPostData("/users");
+
+
+  const users = await fetchData<IPost[]>("/posts");
+  users[0].description;
+
+  
+})() ;
+
+
+
+// duck typing 
+
+

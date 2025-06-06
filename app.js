@@ -87,8 +87,25 @@ function LogNumber(args) {
     return args;
 }
 function LogArray(args) {
+    // we are ignoring type
     console.log(args);
     return args;
 }
-LogString("Saroj");
-LogArray([1, 2, 3, 4, 5]);
+function LogAnything(args) {
+    console.log(args);
+    return args;
+}
+function getOldest(people) {
+    return people.sort(function (a, b) { return a.age - b.age; })[people.length - 1];
+}
+var people = [
+    { name: "Saroj1", age: 74 },
+    { name: "Saroj2", age: 86 },
+    { name: "Saroj3", age: 12 },
+];
+var players = [
+    { name: "bumrah1", age: 745 },
+    { name: "Saddddoj2", age: 867 },
+    { name: "Sarssssoj3", age: 112 },
+];
+console.log(getOldest(players).name);
